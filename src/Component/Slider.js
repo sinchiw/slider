@@ -7,10 +7,7 @@ const Slider = ({ slides }) => {
    const [current, setCurrent] = useState(0)
    const length = slides.length
 
-
-
-
-
+   //slide to the next image
    const nextImage = (current) => {
       if (current < length - 1) {
 
@@ -19,7 +16,7 @@ const Slider = ({ slides }) => {
          setCurrent(0)
       }
    }
-
+   //slide to the prev Image
    const prevImage = (current) => {
       if (current > 0) {
          setCurrent(prev => prev - 1)
@@ -27,48 +24,39 @@ const Slider = ({ slides }) => {
          setCurrent(length - 1)
       }
    }
-
+   //setting the functionality for the dots 
    const setImage = (img) => {
-
       setCurrent(img)
    }
 
    const renderDots = slides.map((img, index) => {
       return (
-         <button onClick={() => setImage(index)}>{index}</button>
+         <div key={index} className={`slideshowDots${index === current ? " active" : ""}`} onClick={() => setImage(index)}></div>
       )
-
    })
 
-   const renderImage = slides.map((img, index) => {
+   const renderImage = slides.map((img) => {
       return (
          <img key={img.id} src={`./Assets/${img.image}`} className="image" alt={img.alt} />
       )
    })
 
-   console.log(slides[0])
-
    return (
       <div className='main'>
          <div className="sliderContainer">
-            <button className="leftButton" onClick={() => prevImage(current)}>{`<`}</button>
+            <div className="leftButton" onClick={() => prevImage(current)}>{`<`}</div>
             <div className="sliderContent">
-               <div className="slidesshowSlider" style={{ transform: `translate3d(${-current * 100}%, 0, 0)` }}>
+               <div className="imagesBox" style={{ transform: `translate3d(${-current * 100}%, 0, 0)` }}>
                   {renderImage}
                </div>
             </div>
-            <button className="rightButton" onClick={() => nextImage(current)}>{`>`}</button>
-
+            <div className="rightButton" onClick={() => nextImage(current)}>{`>`}</div>
          </div>
-
          <div className="dots">
             {renderDots}
          </div>
-
       </div>
-
    )
-
 }
 
 export default Slider
